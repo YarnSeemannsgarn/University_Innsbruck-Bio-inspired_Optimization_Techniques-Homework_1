@@ -1,3 +1,5 @@
+# Author: Jan Schlenker
+
 def parse(tsp_string):
     cities = []
     city_part = False
