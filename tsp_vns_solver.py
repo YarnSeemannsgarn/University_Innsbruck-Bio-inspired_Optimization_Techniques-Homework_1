@@ -34,9 +34,11 @@ def variableNeighbourhoodSearch(cities, maxNeighbourhoods, triesPerNeighbourhood
     initialCities = list(cities)
     for i in xrange(maxNeighbourhoods):
         for j in xrange(triesPerNeighbourhoodSize):
-            copiedCities = list(initialCities)       
+            copiedCities = list(initialCities)
             for k in xrange(i+1):
                 pos1 = randint(0, cityCount)
+                while(pos1 in insertedPositions):
+                    pos1 = randint(0, cityCount)
                 pos2 = randint(0, cityCount)
                 while(pos1 == pos2):
                     pos2 = randint(0, cityCount)
@@ -44,10 +46,10 @@ def variableNeighbourhoodSearch(cities, maxNeighbourhoods, triesPerNeighbourhood
                 tmpCity = copiedCities[pos1]
                 copiedCities.pop(pos1)
                 copiedCities.insert(pos2-1, tmpCity)
-            newValue = calculateTSPDistance(copiedCities)
-            if newValue < bestValue:
-                cities = list(copiedCities)
-                bestValue = newValue
+                newValue = calculateTSPDistance(copiedCities)
+                if newValue < bestValue:
+                    cities = list(copiedCities)
+                    bestValue = newValue
         if(bestValue < initialBestValue):
             return (cities, bestValue)
     return (cities, bestValue)
@@ -83,7 +85,9 @@ def main(iterations, maxNeighbourhoods, triesPerNeighbourhoodSize):
     for i in xrange(iterations):
         cities, bestValue = variableNeighbourhoodSearch(cities, maxNeighbourhoods, triesPerNeighbourhoodSize, bestValue)
         bestValue = calculateTSPDistance(cities)
-        print '{0}/{1} - value: {2}\r'.format(i, iterations, bestValue),
+        currentTime = clock()
+        time = currentTime - start
+        print 'iterations: {0}/{1}, value: {2}, time: {3}s\r'.format(i, iterations, bestValue, time),
     
     end = clock()
     time = end - start
