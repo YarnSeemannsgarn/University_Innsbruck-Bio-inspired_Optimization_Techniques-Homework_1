@@ -37,8 +37,6 @@ def variableNeighbourhoodSearch(cities, maxNeighbourhoods, triesPerNeighbourhood
             copiedCities = list(initialCities)
             for k in xrange(i+1):
                 pos1 = randint(0, cityCount)
-                while(pos1 in insertedPositions):
-                    pos1 = randint(0, cityCount)
                 pos2 = randint(0, cityCount)
                 while(pos1 == pos2):
                     pos2 = randint(0, cityCount)
